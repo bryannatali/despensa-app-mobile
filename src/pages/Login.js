@@ -1,7 +1,32 @@
-import React from 'react';
-import { View, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, AsyncStorage, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, TextInput } from 'react-native';
 
-export default function Login() {
+import api from '../services/api';
+
+export default function Login({ navigation }) {
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    async function handleSubmit() {
+        const response = await api.post('/sessions', {
+            username: username.split('@')[0],
+            password,
+        });
+
+        await AsyncStorage.setItem('user', JSON.stringify(response.data));
+
+        navigation.navigate('List');
+    }
+
+    useEffect(() => {
+        AsyncStorage.getItem('user').then(user => {
+            if(JSON.parse(user)) {
+                navigation.navigate('List')
+            }
+        });
+    }, [])
+
     return (
         <KeyboardAvoidingView enabled={Platform.OS === 'ios'} behavior="padding" style={styles.container}>
             <View style={styles.form}>
@@ -12,6 +37,8 @@ export default function Login() {
                     placeholderTextColor="#999"
                     autoCapitalize="none"
                     autoCorrect={false}
+                    value={username}
+                    onChangeText={setUsername}
                 />
                 <Text style={styles.label}>Your password</Text>
                 <TextInput
@@ -20,9 +47,12 @@ export default function Login() {
                     placeholderTextColor="#999"
                     autoCapitalize="none"
                     autoCorrect={false}
+                    secureTextEntry={true}
+                    value={password}
+                    onChangeText={setPassword}
                 />
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
             </View>
