@@ -14,12 +14,12 @@ export default function MarketListItem({ marketListItem }) {
     }, [marketListItem]);
 
     return (
-        <View style={[styles.container, styles.padding]}>
+        <View style={[styles.container, styles.mainContainer]}>
             <View style={styles.container}>
                 <CheckBox checked={item.bought} onPress={handleCheckItem} />
-                <Text>{item.name}</Text>
+                <Text style={styles.name}>{item.name}</Text>
             </View>
-            <Text>{item.quantity}</Text>
+            <Text style={styles.quantity}>{item.quantity}</Text>
         </View>
     );
 }
@@ -31,7 +31,17 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
 
-    padding: {
-        paddingRight: 20
+    mainContainer: {
+        paddingRight: 20,
+        backgroundColor: '#eee'
+    },
+
+    name: {
+        fontSize: 16,
+    },
+
+    quantity: {
+        fontSize: 12,
+        fontWeight: 'bold'
     },
 });

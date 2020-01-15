@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, AsyncStorage, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, TextInput } from 'react-native';
+import { View, Image, AsyncStorage, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, TextInput } from 'react-native';
+
+import Logo from '../assets/logo.png';
 
 import api from '../services/api';
 
@@ -29,6 +31,7 @@ export default function Login({ navigation }) {
 
     return (
         <KeyboardAvoidingView enabled={Platform.OS === 'ios'} behavior="padding" style={styles.container}>
+            <Image source={Logo} alt='Despensa App'/>
             <View style={styles.form}>
                 <Text style={styles.label}>Your username</Text>
                 <TextInput
@@ -92,7 +95,7 @@ const styles = StyleSheet.create({
 
     button: {
         height: 42,
-        backgroundColor: '#F05A5B',
+        backgroundColor: '#5a52d1',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 2,

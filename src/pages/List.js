@@ -30,6 +30,10 @@ export default function List({ navigation }) {
         navigation.navigate('MarketList', { id });
     }
 
+    function handleCreateNewList() {
+        navigation.navigate('NewMarketList');
+    }
+
     async function handleLogout() {
         await AsyncStorage.removeItem('user');
         navigation.navigate('Login');
@@ -41,6 +45,7 @@ export default function List({ navigation }) {
                 leftComponent={{ icon: 'menu', color: '#fff' }}
                 centerComponent={{ text: 'Despensa App', style: { color: '#fff' } }}
                 rightComponent={{ icon: 'power-off', color: '#fff', type: 'font-awesome', onPress: handleLogout }}
+                backgroundColor='#5a52d1'
             />
             <View style={styles.container}>
                 <FlatList
@@ -56,6 +61,11 @@ export default function List({ navigation }) {
                         </TouchableOpacity>
                     )}
                 />
+                <View style={styles.addItemContainer}>
+                    <TouchableOpacity style={styles.addItemButton} onPress={handleCreateNewList}>
+                        <Text style={styles.addItemText}>New List</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </SafeAreaView>
     );
@@ -76,7 +86,6 @@ const styles = StyleSheet.create({
     },
 
     listItem: {
-        marginBottom: 30,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -89,6 +98,7 @@ const styles = StyleSheet.create({
     icon: {
 
     },
+
     marketListName: {
         fontSize: 22,
         fontWeight: 'bold'
@@ -97,4 +107,26 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
     },
+
+    addItemContainer: {
+        flexDirection: 'row',
+    },
+
+    addItemButton: {
+        padding: 12,
+        backgroundColor: '#5a52d1',
+        width: '35%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 4,
+        marginTop: 10,
+        marginLeft: 'auto',
+        marginRight: 10
+    },
+
+    addItemText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16
+    }
 })
